@@ -67,4 +67,11 @@ public class MyJFramePrincipal extends JFrame {
 	public String getProductions() {
 		return productions.getText().replaceAll("\\s","");
 	}
+	
+	public void resetJTextFile() {
+		terminals.setText("");
+		noTerminals.setText("");
+		axiomaticSymbol.setText("");
+		productions.setText("");
+	}
 }

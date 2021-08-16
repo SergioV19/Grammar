@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import presenters.Events;
+
 public class MyJFramePrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +38,7 @@ public class MyJFramePrincipal extends JFrame {
 		add(noTerminals);
 		add(axiomaticSymbol);
 		add(productions);
-		add(editButton("Crear gramatica", commandName));
+		add(editButton("Crear gramatica", Events.CREATE_GRAMMAR.name()));
 	}
 	
 	private JButton editButton(String name, String commandName) {
@@ -50,4 +52,19 @@ public class MyJFramePrincipal extends JFrame {
 		jTextField.setBorder(BorderFactory.createTitledBorder(title));
 	}
 	
+	public String getTerminals() {
+		return terminals.getText().replaceAll("\\s","");
+	}
+	
+	public String getNoTerminals() {
+		return noTerminals.getText().replaceAll("\\s","");
+	}
+	
+	public String getAxiomatic() {
+		return axiomaticSymbol.getText().replaceAll("\\s","");
+	}
+	
+	public String getProductions() {
+		return productions.getText().replaceAll("\\s","");
+	}
 }

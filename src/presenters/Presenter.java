@@ -12,12 +12,14 @@ public class Presenter implements ActionListener{
 	public Presenter() {
 		framePrincipal = new MyJFramePrincipal(this);
 		framePrincipal.setVisible(true);
-		System.out.println("Holis");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch (Events.valueOf(e.getActionCommand())) {
+		case CREATE_GRAMMAR:
+			System.out.println("creada");
+			break;
+		}
 	}
 }

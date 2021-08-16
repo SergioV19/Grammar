@@ -16,10 +16,6 @@ public class Grammar {
 		this.noTerminals = noTerminals;
 		this.axiomticSymbol = axiomticSymbol;
 		this.productions = productions;
-
-	}
-
-	public void genetateTreeGrammar() {
 		grammarTree = new GrammarTree(axiomticSymbol, productions);
 	}
 

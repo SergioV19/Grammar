@@ -9,7 +9,7 @@ public class Grammar {
 	private ArrayList<Production> productions;
 	private GrammarTree grammarTree;
 
-	public Grammar(ArrayList<String> terminals, ArrayList<String> noTerminals, String axiomticSymbol,
+	public Grammar(ArrayList<String> terminals, ArrayList<String> noTerminals,String axiomticSymbol,
 			ArrayList<Production> productions) {
 		super();
 		this.terminals = terminals;
@@ -52,23 +52,4 @@ public class Grammar {
 		}
 	}
 
-	public static void main(String[] args) {
-		ArrayList<String> terminals = new ArrayList<String>();
-		terminals.add("m");
-		terminals.add("n");
-		ArrayList<String> noTerminals = new ArrayList<String>();
-		noTerminals.add("S");
-		noTerminals.add("A");
-		noTerminals.add("B");
-		ArrayList<Production> productions = new ArrayList<Production>();
-		productions.add(new Production("B", "*"));
-		productions.add(new Production("B", "m"));
-		productions.add(new Production("A", "Bn"));
-		productions.add(new Production("A", "Am"));
-		productions.add(new Production("A", "n"));
-		productions.add(new Production("S", "Am"));
-		Grammar grammar = new Grammar(terminals, noTerminals, "S", productions);
-		grammar.genetateTreeGrammar();
-		grammar.showTree();
-	}
 }

@@ -18,6 +18,7 @@ public class Presenter implements ActionListener {
 	public Presenter() {
 
 		framePrincipal = new MyJFramePrincipal(this);
+		framePrincipal.addGrammarCreator();
 		framePrincipal.setVisible(true);
 	}
 
@@ -25,20 +26,33 @@ public class Presenter implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (Events.valueOf(e.getActionCommand())) {
 		case CREATE_GRAMMAR:
-			ArrayList<String> terminals = convert(framePrincipal.getTerminals());
-			ArrayList<String> noTerminals = convert(framePrincipal.getNoTerminals());
-			String axiomatic = framePrincipal.getAxiomatic();
-			ArrayList<Production> productions = convertProductions(framePrincipal.getProductions());
-			if (valideSymbolsInProductions(terminals, noTerminals, productions) && valideAxiomaticSymbol(noTerminals,axiomatic)) {
-				grammar = new Grammar(terminals, noTerminals, axiomatic, productions);
-				grammar.showTree();
-				framePrincipal.resetJTextFile();
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Los simbolos de las producciones no coinciden con los simbolos terminales o no terminales o no hay una produccion que "
-						+ "inicie con el simbolo inicial axomatico","Error en la gramatica",JOptionPane.ERROR_MESSAGE);
-			}
+			createGrammar();
 			break;
+		}
+	}
+
+	private void createGrammar() {
+		ArrayList<String> terminals = convert(framePrincipal.getTerminals());
+		ArrayList<String> noTerminals = convert(framePrincipal.getNoTerminals());
+		String axiomatic = framePrincipal.getAxiomatic();
+		ArrayList<Production> productions = convertProductions(framePrincipal.getProductions());
+		grammarValidator(terminals, noTerminals, axiomatic, productions);
+	}
+
+	private void grammarValidator(ArrayList<String> terminals, ArrayList<String> noTerminals, String axiomatic,
+			ArrayList<Production> productions) {
+		if (valideSymbolsInProductions(terminals, noTerminals, productions)
+				&& valideAxiomaticSymbol(noTerminals, axiomatic)) {
+			grammar = new Grammar(terminals, noTerminals, axiomatic, productions);
+			grammar.showTree();
+			framePrincipal.resetJTextFile();
+			JOptionPane.showMessageDialog(null,"Gramatica creada con exito", "Completado", JOptionPane.PLAIN_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Los simbolos de las producciones no coinciden con los simbolos terminales o no terminales"
+					+ " o no hay una produccion que "
+					+ "inicie con el simbolo inicial axomatico",
+					"Error en la gramatica", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -59,8 +73,8 @@ public class Presenter implements ActionListener {
 				if ((valideTerminalsAndNoTerminals(terminals, "" + production.getProduction().charAt(i))
 						|| valideTerminalsAndNoTerminals(noTerminals, "" + production.getProduction().charAt(i)))
 						&& valideAxiomaticSymbol(noTerminals, production.getProducer())) {
-					temp =  true;
-				}else {
+					temp = true;
+				} else {
 					temp = false;
 				}
 			}
@@ -90,10 +104,11 @@ public class Presenter implements ActionListener {
 		ArrayList<Production> productions = new ArrayList<Production>();
 		ArrayList<String> temp = convert(text);
 		for (String p : temp) {
-			if (p.split(">>").length<2) {
-			JOptionPane.showMessageDialog(null,"Hay una produccion incompleta", "Error en las producciones",JOptionPane.ERROR_MESSAGE);	
-			}else {
-			productions.add(new Production(p.split(">>")[0], p.split(">>")[1]));
+			if (p.split(">>").length < 2) {
+				JOptionPane.showMessageDialog(null, "Hay una produccion incompleta", "Error en las producciones",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				productions.add(new Production(p.split(">>")[0], p.split(">>")[1]));
 			}
 		}
 		return productions;

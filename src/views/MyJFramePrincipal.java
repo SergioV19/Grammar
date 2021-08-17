@@ -28,7 +28,7 @@ public class MyJFramePrincipal extends JFrame {
 
 		this.l = l;
 
-		
+
 	}
 
 	public void addGrammarCreator() {
